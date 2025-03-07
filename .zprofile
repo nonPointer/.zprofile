@@ -32,7 +32,7 @@ function ld_ssh_key() {
     echo "Load private key..."
     ssh-add
   fi
-  "Private key loaded!"
+  echo "Private key loaded!"
   command ssh $@
 } 
 alias ssh=ld_ssh_key
