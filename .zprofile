@@ -24,3 +24,15 @@ function stream() {
   dir="/Users/${USER}/Downloads/whisper.cpp/"
   "$dir/build/bin/whisper-stream" -m "$dir/models/ggml-medium.en.bin" -t 0 -f "./$(date "+%Y-%m-%d %H-%M-%S").txt"
 }
+
+# ssh wrapper
+function ld_ssh_key() {
+  echo "Checking if private key loaded..."
+  if [[ $(ssh-add -l) == *"no identities"* ]]; then
+    echo "Load private key..."
+    ssh-add
+  fi
+  "Private key loaded!"
+  command ssh $@
+} 
+alias ssh=ld_ssh_key
