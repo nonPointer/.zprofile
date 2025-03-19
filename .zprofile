@@ -36,3 +36,20 @@ function ld_ssh_key() {
   command ssh $@
 } 
 alias ssh=ld_ssh_key
+
+function checksum() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: checksum <filename>"
+    return 1
+  fi
+
+  if [[ ! -f "$1" ]]; then
+    echo "Error: File '$1' not found!"
+    return 1
+  fi
+
+  echo "Checksums for: $1"
+  echo "MD5:    $(md5sum "$1" | awk '{print $1}')"
+  echo "SHA1:   $(shasum -a 1 "$1" | awk '{print $1}')"
+  echo "SHA256: $(shasum -a 256 "$1" | awk '{print $1}')"
+}
