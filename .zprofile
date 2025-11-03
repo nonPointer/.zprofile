@@ -53,6 +53,9 @@ function checksum() {
   echo "SHA1:   $(shasum -a 1 "$1" | awk '{print $1}')"
   echo "SHA256: $(shasum -a 256 "$1" | awk '{print $1}')"
 }
+function diffupdate() {
+  (find . -maxdepth 1 -type f ! -name "checksum.txt" -exec md5 {} + | sed 's|^\./||' | sort) > checksum.txt
+}
 function diffcheck() {
-  diff <(md5sum * | sort) <(sort checksum.txt)
+  diff <(find . -maxdepth 1 -type f ! -name "checksum.txt" -exec md5 {} + | sed 's|^\./||' | sort) <(sort checksum.txt)
 }
