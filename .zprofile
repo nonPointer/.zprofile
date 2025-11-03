@@ -53,3 +53,6 @@ function checksum() {
   echo "SHA1:   $(shasum -a 1 "$1" | awk '{print $1}')"
   echo "SHA256: $(shasum -a 256 "$1" | awk '{print $1}')"
 }
+function diffcheck() {
+  diff <(md5sum * | sort) <(sort checksum.txt)
+}
