@@ -55,10 +55,13 @@ function checksum() {
 }
 
 diffupdate() {
-  (find . -maxdepth 1 -type f ! -name "checksum.txt" \
+  local depth="${1:-1}"   # use provided value or default to 1
+  (find . -maxdepth "$depth" -type f ! -name "checksum.txt" \
     -exec md5sum {} + | sed 's|^\./||' | sort) > checksum.txt
 }
+
 diffcheck() {
-  diff <(find . -maxdepth 1 -type f ! -name "checksum.txt" \
+  local depth="${1:-1}"   # use provided value or default to 1
+  diff <(find . -maxdepth "$depth" -type f ! -name "checksum.txt" \
           -exec md5sum {} + | sed 's|^\./||' | sort) <(sort checksum.txt)
 }
