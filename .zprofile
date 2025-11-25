@@ -65,3 +65,10 @@ diffcheck() {
   diff <(find . -maxdepth "$depth" -type f ! -name "checksum.txt" \
           -exec md5sum {} + | sed 's|^\./||' | sort) <(sort checksum.txt)
 }
+
+cvenv() {
+  python3 -m venv .venv
+}
+venv() {
+  source .venv/bin/activate
+}
