@@ -66,9 +66,9 @@ diffcheck() {
           -exec md5sum {} + | sed 's|^\./||' | sort) <(sort checksum.txt)
 }
 
-cvenv() {
+venv() {
   python3 -m venv .venv
 }
-venv() {
+activate() {
   source .venv/bin/activate
 }
