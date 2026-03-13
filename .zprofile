@@ -73,6 +73,30 @@ activate() {
   source .venv/bin/activate
 }
 
+function marp-pdf() {
+    if [ -z "$1" ]; then
+        echo "Usage: marp-pdf <filename.md>"
+        return 1
+    fi
+    
+    local output_file="${1%.*}.pdf"
+    
+    echo "Converting $1 to $output_file..."
+    marp "$1" --pdf --allow-local-files -o "$output_file"
+}
+
+function marp-pptx() {
+    if [ -z "$1" ]; then
+        echo "Usage: marp-pptx <filename.md>"
+        return 1
+    fi
+  
+    local output_file="${1%.*}.pptx"
+  
+    echo "Converting $1 to $output_file (editable)..."
+    marp "$1" --pptx --pptx-editable --allow-local-files -o "$output_file"
+}
+
 # jrnl shortcut
 function j() {
   local dir="$HOME/Downloads/jrnl"
