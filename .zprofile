@@ -72,3 +72,11 @@ venv() {
 activate() {
   source .venv/bin/activate
 }
+
+# jrnl shortcut
+function j() {
+  local dir="$HOME/Downloads/jrnl"
+  "$dir/sync.sh"
+  jrnl "$@"
+  "$dir/sync.sh"
+}
