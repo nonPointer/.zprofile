@@ -104,3 +104,7 @@ function j() {
   jrnl "$@"
   "$dir/sync.sh"
 }
+
+function claude-yolo () {
+  claude --dangerously-skip-permissions
+}
