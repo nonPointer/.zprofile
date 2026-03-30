@@ -1,11 +1,25 @@
 # SAP Privilege
 export PRIVILEGES_CLI_LOCATION=/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI 
-function please() {
+
+function sudo() {
+  # 1. 检查当前用户是否在 admin 组（Privileges.app 的逻辑）
   if [[ $(groups "$USER") != *admin* ]]; then
-    echo "Elevate to root privilege"
-    ${PRIVILEGES_CLI_LOCATION} -a -n "For some reasons" &> /dev/null
+    echo "Checking privileges... Elevating to admin."
+    
+    # 确保变量存在，若不存在则尝试默认路径
+    local priv_cli="${PRIVILEGES_CLI_LOCATION:-/Applications/Privileges.app/Contents/Resources/PrivilegesCLI}"
+    
+    # 执行提权操作
+    if [[ -f "$priv_cli" ]]; then
+      "$priv_cli" -a -n "Automatic elevation for sudo" &> /dev/null
+    else
+      echo "Warning: Privileges CLI not found at $priv_cli"
+    fi
   fi
-  sudo $@
+
+  # 2. 使用 'command' 关键字调用真正的 /usr/bin/sudo
+  # "$@" 确保所有参数（包括空格和引号）原封不动传递
+  command sudo "$@"
 }
 
 # shortcut to whisper
