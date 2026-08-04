@@ -1,0 +1,5 @@
+Host *
+    PubkeyAcceptedKeyTypes=+ssh-rsa
+    HostKeyAlgorithms=+ssh-rsa
+    UseKeychain yes
+    AddKeysToAgent yes
